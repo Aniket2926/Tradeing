@@ -85,20 +85,29 @@ def fetch_and_analyze():
 
 # Schedule the function to run daily at 8:50 PM
 def start_scheduler():
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(fetch_and_analyze, "cron", hour=20, minute=50)
-    scheduler.start()
-    print("Scheduler started!")
+    try:
+        scheduler = BackgroundScheduler()
+        scheduler.add_job(fetch_and_analyze, "cron", hour=20, minute=50)
+        scheduler.start()
+        print("Scheduler started!")
+    except Exception as e:
+        print(f"Error starting scheduler: {e}")
 
 # Flask route to display stock updates
 @app.route("/")
 def index():
-    return render_template("stock_data.html")
+    try:
+        return render_template("stock_data.html")
+    except Exception as e:
+        print(f"Error rendering template: {e}")
+        return "<h1>Error: Unable to load the stock data page.</h1>"
 
 # Run the app
 if __name__ == "__main__":
     print("Starting Optimist.Trader...")
     fetch_and_analyze()  # Initial fetch to ensure data exists on first load
     start_scheduler()    # Start the scheduler
-    port = int(os.environ.get("PORT", 5000))  # Use PORT from environment or default to 5000
-    app.run(host="0.0.0.0", port=port)        # Bind to 0.0.0.0 for Render
+
+    # Bind to PORT environment variable or default to 5000 for local testing
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)  # Bind to all interfaces
