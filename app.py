@@ -2,6 +2,7 @@ from flask import Flask, render_template
 import yfinance as yf
 import pandas as pd
 from apscheduler.schedulers.background import BackgroundScheduler
+import os
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -99,4 +100,5 @@ if __name__ == "__main__":
     print("Starting Optimist.Trader...")
     fetch_and_analyze()  # Initial fetch to ensure data exists on first load
     start_scheduler()    # Start the scheduler
-    app.run(debug=True, port=5000)  # Start the Flask app
+    port = int(os.environ.get("PORT", 5000))  # Use PORT from environment or default to 5000
+    app.run(host="0.0.0.0", port=port)        # Bind to 0.0.0.0 for Render
