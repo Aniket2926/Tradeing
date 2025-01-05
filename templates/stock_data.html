@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimist.Trader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #f0f8ff, #e6f7ff);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #0078d7;
+            margin: 20px 0;
+        }
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        table thead {
+            background-color: #0078d7;
+            color: white;
+        }
+        table th, table td {
+            padding: 12px 20px;
+            text-align: center;
+        }
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        table tr:hover {
+            background-color: #e0f7fa;
+        }
+        table td {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Optimist.Trader</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Stock</th>
+                <th>Current Price</th>
+                <th>% Change</th>
+                <th>SMA(50)</th>
+                <th>SMA(100)</th>
+                <th>SMA(200)</th>
+                <th>Signal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stock in stocks %}
+            <tr>
+                <td>{{ stock.stock }}</td>
+                <td>{{ stock.close_price }}</td>
+                <td>{{ stock.change_percent }}</td>
+                <td>{{ stock.sma_50 }}</td>
+                <td>{{ stock.sma_100 }}</td>
+                <td>{{ stock.sma_200 }}</td>
+                <td>{{ stock.signal }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
+
+
